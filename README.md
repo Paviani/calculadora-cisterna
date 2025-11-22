@@ -50,4 +50,4 @@ Onde:
 Este projeto é de código aberto e está disponível para fins educacionais e de sustentabilidade.
 
 ---
-**Desenvolvido por [João Paviani]**
+**Desenvolvido por João Paviani**
