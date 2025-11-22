@@ -1,0 +1,46 @@
+/* 
+ * Custom Styles for HydroCalc Pro
+ * Complements Tailwind CSS utility classes
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc; /* slate-50 */
+    color: #1e293b; /* slate-800 */
+}
+
+/* Custom Gradient for Navbar/Header */
+.bg-gradient-brand {
+    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+}
+
+/* Card Hover Effect */
+.hover-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.hover-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Result Card Left Border Accent */
+.border-l-brand {
+    border-left: 5px solid #0ea5e9; /* sky-500 */
+}
+
+.border-l-success {
+    border-left: 5px solid #22c55e; /* green-500 */
+}
+
+/* Smooth Fade In for Results */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

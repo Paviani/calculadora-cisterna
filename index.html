@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimensionamento de Aproveitamento de Água de Chuva</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-gradient-brand text-white shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <a class="text-2xl font-bold flex items-center gap-2" href="#">
+                <i class="fas fa-tint"></i>
+                <span>HydroCalc Pro</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-white border-b border-slate-200 py-12 mb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-8">
+                    <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Dimensionamento de Água de Chuva</h1>
+                    <p class="text-xl text-slate-500 font-light">Ferramenta profissional para cálculo de reservatórios
+                        utilizando métodos normatizados. Otimize seu projeto e economize recursos hídricos.</p>
+                </div>
+                <div class="md:col-span-4 text-right hidden md:block">
+                    <i class="fas fa-cloud-showers-heavy text-9xl text-sky-600 opacity-20"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container mx-auto px-4 flex-grow">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                <!-- Input Section -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-xl shadow-lg hover-card h-full">
+                        <div class="bg-white p-6 border-b border-slate-100 rounded-t-xl">
+                            <h2 class="text-xl font-semibold text-slate-700 flex items-center gap-2">
+                                <i class="fas fa-sliders-h text-sky-500"></i>
+                                Parâmetros do Projeto
+                            </h2>
+                        </div>
+                        <div class="p-6">
+                            <form id="calcForm">
+                                <div class="mb-6">
+                                    <label for="citySelect"
+                                        class="block text-sm font-medium text-slate-700 mb-2">Localização
+                                        (Capital)</label>
+                                    <div class="relative">
+                                        <select id="citySelect"
+                                            class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-white appearance-none cursor-pointer"
+                                            required>
+                                            <option value="" selected disabled>Selecione a cidade...</option>
+                                            <!-- Options populated by JS -->
+                                        </select>
+                                        <div
+                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-700">
+                                            <i class="fas fa-chevron-down text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <p id="rainfallInfo" class="mt-2 text-sm text-sky-600 hidden"></p>
+                                </div>
+
+                                <div class="mb-6">
+                                    <label for="areaInput" class="block text-sm font-medium text-slate-700 mb-2">Área de
+                                        Captação (m²)</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-ruler-combined text-slate-400"></i>
+                                        </div>
+                                        <input type="number" id="areaInput" min="1" step="0.1" placeholder="Ex: 100"
+                                            class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-8">
+                                    <label for="demandInput"
+                                        class="block text-sm font-medium text-slate-700 mb-2">Demanda
+                                        Diária Não Potável (Litros)</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-faucet text-slate-400"></i>
+                                        </div>
+                                        <input type="number" id="demandInput" min="1" step="1" placeholder="Ex: 500"
+                                            class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                            required>
+                                    </div>
+                                    <p class="mt-2 text-xs text-slate-500">Água para jardim, lavagem de pisos, descarga,
+                                        etc.</p>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg">
+                                    <i class="fas fa-calculator"></i>
+                                    Calcular Dimensionamento
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="lg:col-span-7">
+                    <div id="resultsCard"
+                        class="bg-white rounded-xl shadow-lg h-full opacity-50 pointer-events-none transition-all duration-500">
+                        <div class="p-6 border-b border-slate-100 flex justify-between items-center flex-wrap gap-4">
+                            <h2 class="text-xl font-semibold text-slate-700 flex items-center gap-2">
+                                <i class="fas fa-chart-bar text-sky-500"></i>
+                                Resultados da Análise
+                            </h2>
+                            <span
+                                class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">Método
+                                Prático (Adaptado)</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- Volume Card -->
+                                <div class="bg-slate-50 p-6 rounded-lg border-l-brand shadow-sm">
+                                    <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Volume
+                                        do
+                                        Tanque Sugerido</div>
+                                    <div id="tankVolume" class="text-3xl font-bold text-sky-600 mb-1">0 L</div>
+                                    <div class="text-sm text-slate-400">Capacidade recomendada</div>
+                                </div>
+
+                                <!-- Savings Card -->
+                                <div class="bg-slate-50 p-6 rounded-lg border-l-success shadow-sm">
+                                    <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Economia
+                                        Estimada</div>
+                                    <div id="savings" class="text-3xl font-bold text-green-600 mb-1">R$ 0,00</div>
+                                    <div class="text-sm text-slate-400">Por mês (Tarifa ref. R$ 8,00/m³)</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-lg p-6 mb-8">
+                                <h3 class="font-semibold text-slate-700 mb-4 flex items-center gap-2">
+                                    <i class="fas fa-info-circle text-sky-500"></i>
+                                    Detalhes Técnicos
+                                </h3>
+                                <ul class="space-y-3 text-sm">
+                                    <li class="flex justify-between items-center border-b border-slate-200 pb-2">
+                                        <span class="text-slate-600">Potencial de Captação Mensal:</span>
+                                        <strong id="monthlyCapture" class="text-slate-800">0 L/mês</strong>
+                                    </li>
+                                    <li class="flex justify-between items-center border-b border-slate-200 pb-2">
+                                        <span class="text-slate-600">Demanda Mensal Estimada:</span>
+                                        <strong id="monthlyDemand" class="text-slate-800">0 L/mês</strong>
+                                    </li>
+                                    <li class="flex justify-between items-center">
+                                        <span class="text-slate-600">Autonomia Estimada:</span>
+                                        <strong id="autonomyDays" class="text-slate-800">0 dias</strong>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-sky-50 border border-sky-100 rounded-lg p-4 flex items-start gap-3 mb-8">
+                                <i class="fas fa-lightbulb text-sky-500 mt-1"></i>
+                                <div>
+                                    <strong class="text-sky-800 block text-sm">Fórmula Utilizada:</strong>
+                                    <span class="text-sky-700 text-xs">Volume = 0.06 × (Menor entre Demanda Anual ou
+                                        Captação Anual)</span>
+                                </div>
+                            </div>
+
+                            <button id="btnDownload" onclick="generatePDF()"
+                                class="w-full border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2 opacity-50 cursor-not-allowed"
+                                disabled>
+                                <i class="fas fa-file-pdf text-red-500"></i>
+                                Baixar Relatório Técnico
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="container mx-auto px-4 text-center text-slate-400 text-sm">
+            <p>&copy; 2024 HydroCalc Pro. Desenvolvido para Engenharia Sustentável.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
